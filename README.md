@@ -17,12 +17,12 @@ Install git on Ansible host using the following guide: https://git-scm.com/downl
 3. Run script to install required ansible modules
 `./ansible-modules.sh`
 
-4. Create Ansible vault password file and enter a password
+4. Create Ansible vault password file and enter a password  
   4a. `nano ~/.vault_pass`  
   4b. Enter password of your choice  
   4c. Use `ctrl + x` to exit, following on-screen information to save
 
-5. Create an Ansible vault, follow on-screen instructions on creating password
+5. Create an Ansible vault, follow on-screen instructions on creating password  
   5a. `ansible-vault create ~/.vault.yaml`  
   5b. Add below information to the file replacing the information as you require (id number can be left at 1111)  
 ```
