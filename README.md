@@ -18,7 +18,7 @@ Install git on Ansible host using the following guide: https://git-scm.com/downl
 `./ansible-modules.sh`
 
 4. Create Ansible vault password file and enter a password
-  4a. `nano ~/.vault-pass`
+  4a. `nano ~/.vault_pass`
   4b. Enter password of your choice
   4c. Use `ctrl + x` to exit, following on-screen information to save
 
