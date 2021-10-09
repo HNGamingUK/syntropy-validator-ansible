@@ -55,4 +55,4 @@ sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys
   10c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!
-`ansible-playbook -i hosts syntropy-validator.yaml`
+`ansible-playbook -i inventory syntropy-validator.yaml`
