@@ -5,13 +5,13 @@
     - "~/.vault.yaml"
 
   tasks:
-    - name: Ensure my group exists
+    - name: Ensure group exists
       ansible.builtin.group:
        name: "{{ my_user }}"
        state: present
        gid: "{{ my_id }}"
 
-    - name: Ensure my user exists
+    - name: Ensure user exists
       ansible.builtin.user:
        comment: "Created by Ansible"
        name: "{{ my_user }}"
@@ -21,7 +21,7 @@
        append: yes
        shell: /bin/bash
 
-    - name: Install my user ssh key
+    - name: Install user ssh key
       ansible.posix.authorized_key:
         user: "{{ my_user }}"
         state: present
@@ -54,19 +54,19 @@
       notify:
       - restart sshd
 
-    - name: Allow SSH
+    - name: Firewall - Allow SSH
       community.general.ufw:
         rule: allow
         direction: in
         port: '22'
         proto: tcp
 
-    - name: Block input by default
+    - name: Firewall - Block input by default
       community.general.ufw:
         direction: incoming
         policy: deny
 
-    - name: Ensure ufw is enabled
+    - name: Firewall - Ensure ufw is enabled
       community.general.ufw:
         state: enabled
 
@@ -92,7 +92,7 @@
         state: started
         enabled: yes
 
-    - name: Installing dependancies
+    - name: Installing docker dependancies
       ansible.builtin.apt:
         update_cache: yes
         name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common']
@@ -127,7 +127,7 @@
       shell: "cd /opt/ && docker-compose pull && docker-compose up -d"
       register: shell_output
 
-    - name: Result of docker-compose
+    - name: Result of docker-compose run
       debug:
         var: shell_output.stderr_lines
 
