@@ -1,0 +1,144 @@
+---
+- hosts: validator
+  become: yes
+  vars_files:
+    - "~/.vault.yaml"
+
+  tasks:
+    - name: Ensure my group exists
+      ansible.builtin.group:
+       name: "{{ my_user }}"
+       state: present
+       gid: "{{ my_id }}"
+
+    - name: Ensure my user exists
+      ansible.builtin.user:
+       comment: "Created by Ansible"
+       name: "{{ my_user }}"
+       password: "{{my_password | password_hash('sha512')}}"
+       uid: "{{ my_id }}"
+       groups: "{{ my_user }},sudo"
+       append: yes
+       shell: /bin/bash
+
+    - name: Install my user ssh key
+      ansible.posix.authorized_key:
+        user: "{{ my_user }}"
+        state: present
+        exclusive: yes
+        key: "{{ lookup('file', '~/.ssh/{{my_user}}.pub') }}"
+
+    - name: Set root password
+      ansible.builtin.user:
+       name: "root"
+       password: "{{root_password | password_hash('sha512')}}"
+
+    - name: Add custom sudoers file
+      ansible.builtin.template:
+        src: "./files/custom-sudoers.j2"
+        dest: "/etc/sudoers.d/custom-sudoers"
+        owner: "root"
+        group: "root"
+        mode: 0640
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Copy over sshd_config file
+      ansible.builtin.copy:
+        src: "../files/sshd_config"
+        dest: "/etc/ssh/sshd_config"
+        backup: yes
+        owner: "root"
+        group: "root"
+        mode: 0644
+        validate: /usr/sbin/sshd -T -f %s
+      notify:
+      - restart sshd
+
+    - name: Allow SSH
+      community.general.ufw:
+        rule: allow
+        direction: in
+        port: '22'
+        proto: tcp
+
+    - name: Block input by default
+      community.general.ufw:
+        direction: incoming
+        policy: deny
+
+    - name: Ensure ufw is enabled
+      community.general.ufw:
+        state: enabled
+
+    - name: Install fail2ban
+      ansible.builtin.apt:
+        update_cache: yes
+        name: fail2ban
+        state: latest
+
+    - name: Copy over fail2ban config
+      ansible.builtin.template:
+         src: "./files/jail.local.j2"
+         dest: "/etc/fail2ban/jail.local"
+         owner: "root"
+         group: "root"
+         mode: 0644
+      notify:
+      - restart fail2ban
+
+    - name: Ensure fail2ban is started and enabled
+      ansible.builtin.systemd:
+        name: fail2ban
+        state: started
+        enabled: yes
+
+    - name: Installing dependancies
+      ansible.builtin.apt:
+        update_cache: yes
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common']
+        state: latest
+
+    - name: Add Docker GPG key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/{{ansible_distribution | lower}}/gpg
+        state: present
+
+    - name: Add Docker repo
+      ansible.builtin.apt_repository:
+        filename: "docker-repo"
+        repo: deb https://download.docker.com/linux/{{ansible_distribution | lower}} {{ansible_distribution_release}} stable
+        state: present
+
+    - name: Update apt and install docker
+      ansible.builtin.apt:
+        update_cache: yes
+        name: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
+        state: latest
+
+    - name: Copy over syntropy-validator docker-compose file
+      ansible.builtin.template:
+        src: "./files/docker-compose.yml.j2"
+        dest: "/opt/docker-compose.yml"
+        owner: "ansible"
+        group: "ansible"
+        mode: 0600
+
+    - name: Pull syntropy-validator image and start container
+      shell: "cd /opt/ && docker-compose pull && docker-compose up -d"
+      register: shell_output
+
+    - name: Result of docker-compose
+      debug:
+        var: shell_output.stderr_lines
+
+  handlers:
+
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+
+    - name: restart fail2ban
+      ansible.builtin.service:
+        name: fail2ban
+        state: restarted

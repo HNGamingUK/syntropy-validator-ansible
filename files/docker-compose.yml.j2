@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  syntropy-blockchain:
+    image: syntropynet/fn:latest
+    container_name: syntropy-blockchain
+    restart: unless-stopped
+    ports:
+      - "30333:30333"
+    command: "--name {{ validator_name }} --bootnodes /dns/p2p.0.syntropynet.com/tcp/30333/p2p/12D3KooWLbHJuFbL45CCpufgoCCpkqsAphbdcEJnxGvx2FU7GQC4 /dns/p2p.2.syntropynet.com/tcp/30333/p2p/12D3KooWKyuvFtFMcz8Es4CEfUsAnPdAo3oUBU8JC7APkAXJuNw7 --telemetry-url 'wss://telemetry.syntropynet.com/submit/{{ access_key }} 0'"
