@@ -18,13 +18,13 @@ Install git on Ansible host using the following guide: https://git-scm.com/downl
 `./ansible-modules.sh`
 
 4. Create Ansible vault password file and enter a password
-  4a. `nano ~/.vault_pass`
-  4b. Enter password of your choice
+  4a. `nano ~/.vault_pass`  
+  4b. Enter password of your choice  
   4c. Use `ctrl + x` to exit, following on-screen information to save
 
 5. Create an Ansible vault, follow on-screen instructions on creating password
-  5a. `ansible-vault create ~/.vault.yaml`
-  5b. Add below information to the file replacing the information as you require (id number can be left at 1111) 
+  5a. `ansible-vault create ~/.vault.yaml`  
+  5b. Add below information to the file replacing the information as you require (id number can be left at 1111)  
 ```
 my_id: 1111
 my_user: hnguk
@@ -50,8 +50,8 @@ sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys
 ```
 
 9. Edit inventory file to have the hostname of your validator (You can either setup local DNS using the your systems host file or add `ansible_host=IP` after the hostname)
-  10a. `nano inventory`
-  10b. Change list of hostname(s) to your own validator hostname(s)
+  10a. `nano inventory`  
+  10b. Change list of hostname(s) to your own validator hostname(s)  
   10c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!
