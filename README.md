@@ -49,7 +49,7 @@ sudo mkdir /home/ansible/.ssh
 sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys
 ```
 
-9. Edit inventory file to have the hostname of your validator (You can either setup local DNS using the your systems host file or add `ansible_host=IP` after the hostname)
+9. Edit inventory file to have the hostname of your validator (You can either setup local DNS using the your systems host file or add `ansible_host=IP` after the hostname)  
   10a. `nano inventory`  
   10b. Change list of hostname(s) to your own validator hostname(s)  
   10c. Use `ctrl + x` to exit, following on-screen information to save
