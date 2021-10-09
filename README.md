@@ -1,12 +1,18 @@
 # syntropy-validator-ansible
 Ansible repo to setup a Syntropy Validator
 
+## Assumptions
+
+1. You have already ordered your VPS or dedicated server and have been provided the login credentials  
+2. The operating system of your server is either Ubuntu 18.04 or 20.04  
+3. You have at least basic understanding working with Linux
+
 ## Pre-reqs
-Ansible host will obbviously need to have Ansible installed, this can be completed using the following guide: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+Ansible host will need to have `ansible` installed, this can be completed by looking here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-Install git on Ansible host using the following guide: https://git-scm.com/downloads
+Ansible host will need to have `git` installed, this can be completed by looking here: https://git-scm.com/downloads
 
-## Steps to install
+## Steps to complete
 
 1. Clone this repo
 `git clone https://github.com/HNGamingUK/syntropy-validator-ansible.git`
