@@ -1,9 +1,9 @@
 # syntropy-validator-ansible
 # WARNING: This is not finished yet! Do not use!
 
-This GitHub repository is an Ansible playbook playbook that can be used to deploy a single validator or multiple!
+This GitHub repository has the required Ansible documents that can be used to deploy a single or even multiple validators.
 
-Deployment for a single validator should take less than 10mins and for multiple validators under 1 hour
+Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour
 
 ## Assumptions
 
