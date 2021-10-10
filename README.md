@@ -4,6 +4,12 @@ This GitHub repository has the required documents that can be used to deploy a s
 
 Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour
 
+## Contents
+* [Assumptions](#assumptions)
+* [Pre-reqs](#pre-reqs)
+* [Steps to complete](#steps-to-complete)  
+* [Advanced Users](#advanced-users)
+
 ## Assumptions
 
 1. You have already ordered your VPS or dedicated server and have been provided the login credentials  
@@ -17,24 +23,24 @@ Ansible host will need to have `git` installed, this can be completed by looking
 
 ## Steps to complete
 
-1. Clone this repo
+1. Clone this repo  
 `git clone https://github.com/HNGamingUK/syntropy-validator-ansible.git`
 
-2. cd into cloned repo
+2. cd into cloned repo  
 `cd syntropy-validator-ansible`
 
-3. Run script to install required ansible modules
+3. Run script to install required ansible modules  
 `./ansible-modules.sh`
 
-4. Create Ansible vault password file
+4. Create Ansible vault password file  
   4a. `nano ~/.vault_pass`  
   4b. Enter password of your choice  
   4c. Use `ctrl + x` to exit, following on-screen information to save
 
-5. Create an Ansible vault
-  5a. Copy contents of `vault-example` 
+5. Create an Ansible vault  
+  5a. Copy contents of `vault-example`  
   5b. `ansible-vault create ~/.vault.yaml`  
-  5c. Paste copied content into nano window
+  5c. Paste copied content into nano window  
   5d. Edit information to values as required (ID can be left at 1111 if you wish), if you plan to deploy multiple validators then repeat section below (incrementing the validator number by 1 each time):
 ```
 validator1_name: hnguk-validator
@@ -42,24 +48,42 @@ validator1_key: access1234
 ```
   5e. Use `ctrl + x` to exit, following on-screen information to save
 
-6. Create Ansible ssh key
+6. Create Ansible ssh key  
 `ssh-keygen -f ~/.ssh/ansible`
 
-7. Create user ssh key
+7. Create user ssh key  
 `ssh-keygen -f ~/.ssh/my_user` - Replace `my_user` with same name entered in step 5d
 
-8. Inital Validator setup (only time you should need to login to the validator manually)
-  8a. Login to validator in a separate window with credentials provided
+8. Inital Validator setup (only time you should need to login to the validator manually)  
+  8a. Login to validator in a separate window with credentials provided  
   8b. Enter the following commands in order (for the final command replace `ansible public key` with the contents of `~/.ssh/ansible.pub` on your Ansible host)  
-`sudo adduser ansible -gecos "" --disabled-password`
-`sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`
-`sudo mkdir /home/ansible/.ssh`
-`sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys`
+`sudo adduser ansible -gecos "" --disabled-password`  
+`sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`  
+`sudo mkdir /home/ansible/.ssh`  
+`sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys`  
 
-9. Edit the inventory file
+9. Edit the inventory file  
   10a. `nano inventory`  
   10b. Add `ansible_host=IP` after the validator entry (if you plan to use mutliple validators add further entries and increment the number by 1)  
   10c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!
-`ansible-playbook -i inventory syntropy-validator.yaml`
+`ansible-playbook -i inventory syntropy-validator.yaml`  
+
+## Advanced Users
+The guide above is deffinately helpful for advanced users but there are potentially some methods of config that you have done differently to me. As such I have outlined them below so you know how to change them (if you want) to conform to your own standard. 
+
+1. Ansible config file
+With this file you will see the sections I have made edits to are uncommented and have data entered. If the data located in the config file does not meet your standards feel free to make edits to make it work for you.
+
+2. Ansible user
+As per the guide above I use an `ansible` user that Ansible uses to login and make the config changes. With the private key being in `~/.ssh/ansible` if this is not how your setup works you will need to edit the config file as mentioned above.
+
+3. Vault password file location
+I store the vault password in `~/.vault_pass` if you store yours in a different location then you will need to change it on line 140 within the Ansible config file.
+
+4. Vault file location
+I store the vault file in `~/.vault.yaml` if you store yours in a different location then you will need to change it on line 5 within the playbook file.
+
+5. Vault file contents
+Please see `vault-example` file for the variables that need to be added to your vault file and edited with your own data  
