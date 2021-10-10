@@ -1,5 +1,4 @@
 # syntropy-validator-ansible
-# WARNING: This is not finished yet! Do not use!
 
 This GitHub repository has the required documents that can be used to deploy a single validator or even multiple.
 
