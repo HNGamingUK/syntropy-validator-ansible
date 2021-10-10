@@ -49,7 +49,7 @@ The Ansible host will need to have `git` installed, this can be completed by loo
     validator1_name: hnguk-validator1
     validator1_key: access1234
     ```
-  5e. Use `ctrl + x` to exit, following on-screen information to save
+    5e. Use `ctrl + x` to exit, following on-screen information to save
 
 6. Create Ansible ssh key  
 `ssh-keygen -f ~/.ssh/ansible`
