@@ -45,10 +45,10 @@ The Ansible host will need to have `git` installed, this can be completed by loo
   5b. `ansible-vault create ~/.vault.yaml`  
   5c. Paste copied content into nano window  
   5d. Edit information to values as required (ID can be left at 1111 if you wish), if you plan to deploy multiple validators then repeat section below (incrementing the validator number by 1 each time):
-```
-validator1_name: hnguk-validator1
-validator1_key: access1234
-```
+  ```
+  validator1_name: hnguk-validator1
+  validator1_key: access1234
+  ```
   5e. Use `ctrl + x` to exit, following on-screen information to save
 
 6. Create Ansible ssh key  
