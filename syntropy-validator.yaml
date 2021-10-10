@@ -123,15 +123,13 @@
         group: "ansible"
         mode: 0600
 
-# Commenting out the run to confirm file copies over without issue
+    - name: Pull syntropy-validator image and start container
+      shell: "cd /opt/ && docker-compose pull && docker-compose up -d"
+      register: shell_output
 
-#    - name: Pull syntropy-validator image and start container
-#      shell: "cd /opt/ && docker-compose pull && docker-compose up -d"
-#      register: shell_output
-
-#    - name: Result of docker-compose run
-#      debug:
-#        var: shell_output.stderr_lines
+    - name: Result of docker-compose run
+      debug:
+        var: shell_output.stderr_lines
 
   handlers:
 
