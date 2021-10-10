@@ -5,6 +5,7 @@ This GitHub repository has the required documents that can be used to deploy a s
 Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour
 
 ## Contents
+
 * [Assumptions](#assumptions)
 * [Pre-reqs](#pre-reqs)
 * [Steps to complete](#steps-to-complete)  
@@ -12,14 +13,16 @@ Deployment of a single validator should take less than 10mins and for multiple v
 
 ## Assumptions
 
-1. You have already ordered your VPS or dedicated server and have been provided the login credentials  
-2. The operating system of your server is either Ubuntu 18.04 or 20.04  
-3. You have at least basic understanding working with Linux
+1. You have been provided your validator access key(s)
+2. You have already ordered your VPS(') or dedicated server(s) and have been provided the login credentials  
+3. The operating system of your server(s) is either Ubuntu 18.04 or 20.04  
+4. You have at least a basic understanding of working with Linux
 
 ## Pre-reqs
-Ansible host will need to have `ansible` installed, this can be completed by looking here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-Ansible host will need to have `git` installed, this can be completed by looking here: https://git-scm.com/downloads
+The Ansible host will need to have `ansible` installed, this can be completed by looking here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+
+The Ansible host will need to have `git` installed, this can be completed by looking here: https://git-scm.com/downloads
 
 ## Steps to complete
 
@@ -43,7 +46,7 @@ Ansible host will need to have `git` installed, this can be completed by looking
   5c. Paste copied content into nano window  
   5d. Edit information to values as required (ID can be left at 1111 if you wish), if you plan to deploy multiple validators then repeat section below (incrementing the validator number by 1 each time):
 ```
-validator1_name: hnguk-validator
+validator1_name: hnguk-validator1
 validator1_key: access1234
 ```
   5e. Use `ctrl + x` to exit, following on-screen information to save
@@ -54,21 +57,27 @@ validator1_key: access1234
 7. Create user ssh key  
 `ssh-keygen -f ~/.ssh/my_user` - Replace `my_user` with same name entered in step 5d
 
-8. Inital Validator setup (only time you should need to login to the validator manually)  
+8. Inital Validator setup (Repeat if you plan to run multiple validators)  
   8a. Login to validator in a separate window with credentials provided  
   8b. Enter the following commands in order (for the final command replace `ansible public key` with the contents of `~/.ssh/ansible.pub` on your Ansible host)  
 `sudo adduser ansible -gecos "" --disabled-password`  
 `sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`  
 `sudo mkdir /home/ansible/.ssh`  
 `sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys`  
+  8c. Logout of validator
 
 9. Edit the inventory file  
-  10a. `nano inventory`  
-  10b. Add `ansible_host=IP` after the validator entry (if you plan to use mutliple validators add further entries and increment the number by 1)  
-  10c. Use `ctrl + x` to exit, following on-screen information to save
+  9a. `nano inventory` 
+  9b. Add `ansible_host=IP` after the validator entry (if you plan to use mutliple validators add further entries and increment the number by 1)  
+  9c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!
 `ansible-playbook -i inventory syntropy-validator.yaml`  
+
+That's it! Your validator should now be online, you can confirm this by going to the telemetry ui and staking dashboard (links below)
+
+* [Telemetry UI](https://telemetry-ui.syntropynet.com/)
+* [Staking Dashboard](https://staking.syntropynet.com/)
 
 ## Advanced Users
 The guide above is deffinately helpful for advanced users but there are potentially some methods of config that you have done differently to me. As such I have outlined them below so you know how to change them (if you want) to conform to your own standard.
