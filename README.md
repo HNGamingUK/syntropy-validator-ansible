@@ -71,7 +71,7 @@ validator1_key: access1234
 `ansible-playbook -i inventory syntropy-validator.yaml`  
 
 ## Advanced Users
-The guide above is deffinately helpful for advanced users but there are potentially some methods of config that you have done differently to me. As such I have outlined them below so you know how to change them (if you want) to conform to your own standard. 
+The guide above is deffinately helpful for advanced users but there are potentially some methods of config that you have done differently to me. As such I have outlined them below so you know how to change them (if you want) to conform to your own standard.
 
 1. Ansible config file
 With this file you will see the sections I have made edits to are uncommented and have data entered. If the data located in the config file does not meet your standards feel free to make edits to make it work for you.
