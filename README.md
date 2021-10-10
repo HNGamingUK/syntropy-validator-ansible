@@ -1,5 +1,9 @@
 # syntropy-validator-ansible
-Ansible repo to setup a Syntropy Validator
+# WARNING: This is not finished yet! Do not use!
+
+This GitHub repository is an Ansible playbook playbook that can be used to deploy a single validator or multiple!
+
+Deployment for a single validator should take less than 10mins and for multiple validators under 1 hour
 
 ## Assumptions
 
@@ -28,18 +32,16 @@ Ansible host will need to have `git` installed, this can be completed by looking
   4b. Enter password of your choice  
   4c. Use `ctrl + x` to exit, following on-screen information to save
 
-5. Create an Ansible vault, follow on-screen instructions on creating password  
-  5a. `ansible-vault create ~/.vault.yaml`  
-  5b. Add below information to the file replacing the information as you require (id number can be left at 1111)  
+5. Create an Ansible vault
+  5a. Copy contents of `vault-example` 
+  5b. `ansible-vault create ~/.vault.yaml`  
+  5c. Paste copied content into nano window
+  5d. Edit information to values as required (ID can be left at 1111 if you wish), if you plan to deploy multiple validators then repeat section below (incrementing the number by 1 each time):
 ```
-my_id: 1111
-my_user: hnguk
-my_password: password1234
-root_password: password4321
-validator_name: hnguk-validator
-access_key: access1234
+validator1_name: hnguk-validator
+validator1_key: access1234
 ```
-  5c. Use `ctrl + x` to exit, following on-screen information to save
+  5e. Use `ctrl + x` to exit, following on-screen information to save
 
 6. Create Ansible ssh key
 `ssh-keygen -f ~/.ssh/ansible`
@@ -47,17 +49,17 @@ access_key: access1234
 7. Create user ssh key
 `ssh-keygen -f ~/.ssh/my_user` - Replace `my_user` with same name entered in step 5b
 
-8. Login to your validator server with provided details and run the following commmands to setup the Ansible user - replace `ansible public key` with the contents of `~/.ssh/ansible.pub`
-```
-sudo adduser ansible -gecos "" --disabled-password
-sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-sudo mkdir /home/ansible/.ssh
-sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys
-```
+8. Inital Validator setup (only time you should need to login to the validator manually)
+  8a. Login to validator in a separate window with credentials provided
+  8b. Enter the following commands in order (for the final command replace `ansible public key` with the contents of `~/.ssh/ansible.pub` on your Ansible host)  
+`sudo adduser ansible -gecos "" --disabled-password`
+`sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`
+`sudo mkdir /home/ansible/.ssh`
+`sudo echo "ansible public key" > /home/ansible/.ssh/authorized_keys`
 
-9. Edit inventory file to have the hostname of your validator (You can either setup local DNS using the your systems host file or add `ansible_host=IP` after the hostname)  
+9. Edit the inventory file
   10a. `nano inventory`  
-  10b. Change list of hostname(s) to your own validator hostname(s)  
+  10b. Add `ansible_host=IP` after the validator entry (if you plan to use mutliple validators add further entries and increment the number by 1)
   10c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!
