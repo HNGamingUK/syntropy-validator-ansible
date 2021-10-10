@@ -1,5 +1,5 @@
 # syntropy-validator-ansible
-This GitHub repository required Ansible documents that can be used to deploy a single validator.
+This GitHub repository has the required Ansible documents that can be used to deploy a single validator.
 
 Deployment of a validator should take less than 10mins
 
