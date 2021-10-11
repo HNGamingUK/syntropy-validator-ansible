@@ -54,6 +54,12 @@
       notify:
       - restart sshd
 
+    - name: Confirm ufw is installed
+      ansible.builtin.apt:
+        update_cache: yes
+        name: 'ufw'
+        state: latest
+
     - name: Firewall - Allow SSH
       community.general.ufw:
         rule: allow
@@ -133,12 +139,12 @@
 
   handlers:
 
-    - name: restart sshd
-      ansible.builtin.service:
-        name: sshd
-        state: restarted
-
     - name: restart fail2ban
       ansible.builtin.service:
         name: fail2ban
+        state: restarted
+
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
         state: restarted
