@@ -22,9 +22,9 @@ The validator software is provided by Syntropy, more information about Syntropy 
 
 ## Pre-reqs
 
-The Ansible host will need to have `ansible` installed, this can be completed by looking here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+The Ansible host will need to have `ansible` installed, this can be completed by looking [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
-The Ansible host will need to have `git` installed, this can be completed by looking here: https://git-scm.com/downloads
+The Ansible host will need to have `git` installed, this can be completed by looking [here](https://git-scm.com/downloads)
 
 ## Steps to complete
 
