@@ -17,7 +17,9 @@ The validator software is provided by Syntropy, more information about Syntropy 
 
 1. You have been provided your validator access key(s)
 2. You have already ordered your VPS(') or dedicated server(s) and have been provided the login credentials  
-3. The operating system of your server(s) is either Ubuntu 18.04 or 20.04  
+3. The operating syetem you are running is supported by the ansible playbook (see list below)
+  Debian 9, 10 & 11
+  Ubuntu 18.04 & 20.04
 4. You have at least a basic understanding of working with Linux
 
 ## Pre-reqs
