@@ -6,6 +6,12 @@ Deployment of a single validator should take less than 10mins and for multiple v
 
 The validator software is provided by Syntropy, more information about Syntropy can found [here](https://www.syntropynet.com/)
 
+## Donate
+
+If this has helped you in anyway and want to help me to continue updating this, by sending a little contribution then please do:
+
+  - Ether Address: 0x9DE8aC561aEBBa42a1D322F101dFe02171e1D4Cb
+
 ## Contents
 
 * [Assumptions](#assumptions)
