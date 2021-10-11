@@ -4,6 +4,8 @@ This GitHub repository has the required documents that can be used to deploy a s
 
 Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour
 
+The validator software is provided by Syntropy, more information about Syntropy can be seen here: https://www.syntropynet.com/
+
 ## Contents
 
 * [Assumptions](#assumptions)
