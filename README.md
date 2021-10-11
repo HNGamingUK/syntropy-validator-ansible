@@ -2,9 +2,9 @@
 
 This GitHub repository has the required documents that can be used to deploy a single validator or even multiple.
 
-Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour
+Deployment of a single validator should take less than 10mins and for multiple validators under 1 hour.
 
-The validator software is provided by Syntropy, more information about Syntropy can found [here](https://www.syntropynet.com/)
+The validator software is provided by Syntropy, more information about Syntropy can found [here](https://www.syntropynet.com/).
 
 ## Donate
 
@@ -105,4 +105,4 @@ I store the vault password in `~/.vault_pass` if you store yours in a different 
 I store the vault file in `~/.vault.yaml` if you store yours in a different location then you will need to change it on line 5 within the playbook file.
 
 5. Vault file contents
-Please see `vault-example` file for the variables that need to be added to your vault file and edited with your own data  
+Please see `vault-example` file for the variables that need to be added to your vault file and edited with your own data.  
