@@ -3,7 +3,7 @@
   become: yes
   vars_files:
     - "~/.vault.yaml"
-
+    
   tasks:
     - name: Ensure group exists
       ansible.builtin.group:
@@ -43,8 +43,8 @@
         validate: /usr/sbin/visudo -cf %s
 
     - name: Copy over sshd_config file
-      ansible.builtin.copy:
-        src: "../files/sshd_config"
+      ansible.builtin.template:
+        src: "../files/sshd_config.j2"
         dest: "/etc/ssh/sshd_config"
         backup: yes
         owner: "root"
@@ -53,6 +53,12 @@
         validate: /usr/sbin/sshd -T -f %s
       notify:
       - restart sshd
+
+    - name: Confirm ufw is installed
+      ansible.builtin.apt:
+        update_cache: yes
+        name: 'ufw'
+        state: latest
 
     - name: Firewall - Allow SSH
       community.general.ufw:
@@ -133,12 +139,12 @@
 
   handlers:
 
-    - name: restart sshd
-      ansible.builtin.service:
-        name: sshd
-        state: restarted
-
     - name: restart fail2ban
       ansible.builtin.service:
         name: fail2ban
+        state: restarted
+
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
         state: restarted
