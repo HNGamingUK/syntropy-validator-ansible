@@ -6,6 +6,8 @@ Deployment of a single validator should take less than 10mins and for multiple v
 
 The validator software is provided by Syntropy, more information about Syntropy can found [here](https://www.syntropynet.com/).
 
+Notice: Please be aware this playbook just covers server hardening and container start up. It does not handle backups & monitoring which is highly suggested to setup! For assistance with setting up backups & monitoring for your validator(s) then I would suggest joining the discord [here](https://discord.gg/3gc9fzH4qd).
+
 ## Donate
 
 If this has helped you in anyway and want to help me to continue updating this, by sending a little contribution then please do:
@@ -30,9 +32,9 @@ If this has helped you in anyway and want to help me to continue updating this, 
 
 ## Pre-reqs
 
-The Ansible host will need to have `ansible` installed, this can be completed by looking [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+The Ansible host will need to have `ansible` installed, this can be completed by looking [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
 
-The Ansible host will need to have `git` installed, this can be completed by looking [here](https://git-scm.com/downloads)
+The Ansible host will need to have `git` installed, this can be completed by looking [here](https://git-scm.com/downloads).
 
 ## Steps to complete
 
@@ -62,10 +64,10 @@ The Ansible host will need to have `git` installed, this can be completed by loo
     5e. Use `ctrl + x` to exit, following on-screen information to save
 
 6. Create Ansible ssh key  
-`ssh-keygen -f ~/.ssh/ansible`
+`ssh-keygen -f ~/.ssh/ansible` - Press enter when asked for a passphrase
 
 7. Create user ssh key  
-`ssh-keygen -f ~/.ssh/my_user` - Replace `my_user` with same name entered in step 5d
+`ssh-keygen -f ~/.ssh/my_user` - Replace `my_user` with same name entered in step 5d - Enter a passphrase when asked if you wish (this phrase will need to be entered whenever you manually login to the validator(s))
 
 8. Inital Validator setup (Repeat if you plan to run multiple validators)  
   8a. Login to validator in a separate window with credentials provided  
