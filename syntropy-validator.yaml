@@ -44,7 +44,7 @@
 
     - name: Copy over sshd_config file
       ansible.builtin.template:
-        src: "../files/sshd_config.j2"
+        src: "./files/sshd_config.j2"
         dest: "/etc/ssh/sshd_config"
         backup: yes
         owner: "root"
