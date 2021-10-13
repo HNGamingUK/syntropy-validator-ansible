@@ -12,7 +12,8 @@ Notice: Please be aware this playbook just covers server hardening and container
 
 If this has helped you in anyway and want to help me to continue updating this, by sending a little contribution then please do:
 
-  - Ether Address: 0x9DE8aC561aEBBa42a1D322F101dFe02171e1D4Cb
+  - Ethereum Address: 0x9DE8aC561aEBBa42a1D322F101dFe02171e1D4Cb
+  - Bitcoin  Address: bc1qa7fnea3vxcje5xywdchhuzr8u6az3mje95lxuv
 
 ## Contents
 
