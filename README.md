@@ -33,7 +33,7 @@ If this has helped you in anyway and want to help me to continue updating this, 
 
 ## Pre-reqs
 
-The Ansible host will need to have `ansible` installed, this can be completed by looking [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
+The Ansible host will need to have `ansible` installed, this can be completed by looking [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html). Be aware as mentioned within the site linked, Ansible does not support Windows and as such if you are on Windows I would suggest installing WSL using this guide [here](https://docs.microsoft.com/en-us/windows/wsl/install). After which you can start a Ubuntu flavor of WSL and install Ansible. 
 
 The Ansible host will need to have `git` installed, this can be completed by looking [here](https://git-scm.com/downloads).
 
