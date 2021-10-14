@@ -5,13 +5,13 @@
     - "~/.vault.yaml"
     
   tasks:
-    - name: Ensure group exists
+    - name: "ensure group exists & is correct ID"
       ansible.builtin.group:
        name: "{{ my_user }}"
        state: present
        gid: "{{ my_id }}"
 
-    - name: Ensure user exists
+    - name: "ensure user exists & set password"
       ansible.builtin.user:
        comment: "Created by Ansible"
        name: "{{ my_user }}"
@@ -21,19 +21,19 @@
        append: yes
        shell: /bin/bash
 
-    - name: Install user ssh key
+    - name: "install user ssh key"
       ansible.posix.authorized_key:
         user: "{{ my_user }}"
         state: present
         exclusive: yes
         key: "{{ lookup('file', '~/.ssh/{{my_user}}.pub') }}"
 
-    - name: Set root password
+    - name: "set root password"
       ansible.builtin.user:
        name: "root"
        password: "{{root_password | password_hash('sha512')}}"
 
-    - name: Add custom sudoers file
+    - name: "add custom sudoers file"
       ansible.builtin.template:
         src: "./files/custom-sudoers.j2"
         dest: "/etc/sudoers.d/custom-sudoers"
@@ -42,7 +42,7 @@
         mode: 0640
         validate: /usr/sbin/visudo -cf %s
 
-    - name: Copy over sshd_config file
+    - name: "copy over sshd_config file"
       ansible.builtin.template:
         src: "./files/sshd_config.j2"
         dest: "/etc/ssh/sshd_config"
@@ -54,35 +54,35 @@
       notify:
       - restart sshd
 
-    - name: Confirm ufw is installed
+    - name: "ensure ufw is installed"
       ansible.builtin.apt:
         update_cache: yes
         name: 'ufw'
         state: latest
 
-    - name: Firewall - Allow SSH
+    - name: "firewall - allow ssh"
       community.general.ufw:
         rule: allow
         direction: in
-        port: '22'
+        port: {{ ssh_port }}
         proto: tcp
 
-    - name: Firewall - Block input by default
+    - name: "firewall - block icomming connections by default"
       community.general.ufw:
         direction: incoming
         policy: deny
 
-    - name: Firewall - Ensure ufw is enabled
+    - name: "firewall - ensure ufw is enabled"
       community.general.ufw:
         state: enabled
 
-    - name: Install fail2ban
+    - name: "ensure fail2ban is installed"
       ansible.builtin.apt:
         update_cache: yes
         name: fail2ban
         state: latest
 
-    - name: Copy over fail2ban config
+    - name: "copying over fail2ban config"
       ansible.builtin.template:
          src: "./files/jail.local.j2"
          dest: "/etc/fail2ban/jail.local"
@@ -92,36 +92,36 @@
       notify:
       - restart fail2ban
 
-    - name: Ensure fail2ban is started and enabled
+    - name: "ensure fail2ban is started and starts on boot"
       ansible.builtin.systemd:
         name: fail2ban
         state: started
         enabled: yes
 
-    - name: Installing docker dependancies
+    - name: "ensure docker dependancies are installed"
       ansible.builtin.apt:
         update_cache: yes
         name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common']
         state: latest
 
-    - name: Add Docker GPG key
+    - name: "ensure Docker GPG key has been added"
       ansible.builtin.apt_key:
         url: https://download.docker.com/linux/{{ansible_distribution | lower}}/gpg
         state: present
 
-    - name: Add Docker repo
+    - name: "ensure Docker repository has been added"
       ansible.builtin.apt_repository:
         filename: "docker-repo"
         repo: deb https://download.docker.com/linux/{{ansible_distribution | lower}} {{ansible_distribution_release}} stable
         state: present
 
-    - name: Update apt and install docker
+    - name: "ensure Docker is installed"
       ansible.builtin.apt:
         update_cache: yes
         name: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
         state: latest
 
-    - name: Copy over syntropy-validator docker-compose file
+    - name: "copying over validator compose file"
       ansible.builtin.template:
         src: "./files/docker-compose.yml.j2"
         dest: "/opt/docker-compose.yml"
@@ -129,7 +129,7 @@
         group: "ansible"
         mode: 0600
 
-    - name: Pull syntropy-validator image and start container
+    - name: "pulling validator image and ensuring container is started"
       shell: "cd /opt/ && docker-compose pull && docker-compose up -d"
       register: shell_output
 
@@ -139,12 +139,12 @@
 
   handlers:
 
-    - name: restart fail2ban
+    - name: "restarting1 fail2ban"
       ansible.builtin.service:
         name: fail2ban
         state: restarted
 
-    - name: restart sshd
+    - name: "restarting sshd"
       ansible.builtin.service:
         name: sshd
         state: restarted
