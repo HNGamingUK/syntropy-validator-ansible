@@ -81,7 +81,7 @@ The Ansible host will need to have `git` installed, this can be completed by loo
 
 9. Edit the inventory file  
   9a. `nano inventory` 
-  9b. Add `ansible_host=IP` after the validator entry (if you plan to use mutliple validators add further entries and increment the number by 1)  
+  9b. Change `IP` to the IP address you recieved from your provider (if you plan to use mutliple validators add further entries and increment the validator number by 1)  
   9c. Use `ctrl + x` to exit, following on-screen information to save
 
 10. Finally run the playbook!

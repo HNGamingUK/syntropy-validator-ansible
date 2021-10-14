@@ -1,2 +1,2 @@
 [validator]
-validator1
+validator1 ansible_host=IP
