@@ -26,7 +26,7 @@ If this has helped you in anyway and want to help me to continue updating this, 
 
 1. You have been provided your validator access key(s)
 2. You have already ordered your VPS(') or dedicated server(s) and have been provided the login credentials  
-3. The operating syetem you are running is supported by the ansible playbook (see list below)
+3. The operating syetem of the VPS(') or dedicated server (s) is supported by the ansible playbook (see list below)
   - Debian 9, 10 & 11
   - Ubuntu 18.04 & 20.04
 4. You have at least a basic understanding of working with Linux
